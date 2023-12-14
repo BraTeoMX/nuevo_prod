@@ -197,9 +197,12 @@
                                     @php
                                         $valorSemanal = $produccion->{"semana$i"};
                                         $colorClass = $colorClasses[$valorSemanal] ?? '';
+                                        $extraValue = $produccion->{"extra$i"};
                                     @endphp
-                                    <td class="{{ $colorClass }}">
-                                        {{-- $valorSemanal --}}
+                                <td class="{{ $colorClass }}">
+                                    @if(in_array($extraValue, [1, 2, 3]))
+                                        <strong>* * * </strong>
+                                    @endif
                                 </td>
                                     @endfor
                                 </tr>

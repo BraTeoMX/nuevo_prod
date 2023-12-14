@@ -25,6 +25,7 @@ class ProduccionController extends Controller
             '#FF0000',
             '#A6A6A6',
             '#F9F9EB',
+            '#FFFFFF',
         ];
         $titulos = [
             'CUMPLIMIENTO DE META JUEVES 7:00 P.M.',
@@ -107,6 +108,7 @@ class ProduccionController extends Controller
             '#FF0000',
             '#A6A6A6',
             '#F9F9EB',
+            '#FFFFFF',
         ];
         $mensaje = "Hola Mundo";
         $numSemanas = 52;
@@ -277,6 +279,7 @@ class ProduccionController extends Controller
             '#FF0000',
             '#A6A6A6',
             '#F9F9EB',
+            '#F9F9EB',
         ];
         $mensaje = "Hola Mundo";
         $numSemanas = 52;
@@ -387,6 +390,7 @@ class ProduccionController extends Controller
             '#FF0000',
             '#A6A6A6',
             '#F9F9EB',
+            '#FFFFFF',
         ];
         $mensaje = "Hola Mundo";
         $numSemanas = 52;
@@ -522,6 +526,7 @@ class ProduccionController extends Controller
             '#FF0000',
             '#A6A6A6',
             '#F9F9EB',
+            '#FFFFFF',
         ];
         $mensaje = "Hola Mundo";
         $numSemanas = 52;
@@ -663,6 +668,7 @@ class ProduccionController extends Controller
             '#FF0000',
             '#A6A6A6',
             '#F9F9EB',
+            '#FFFFFF',
         ];
         $mensaje = "Hola Mundo";
         $numSemanas = 52;
@@ -813,6 +819,7 @@ class ProduccionController extends Controller
             '#FF0000',
             '#A6A6A6',
             '#F9F9EB',
+            '#FFFFFF',
         ];
         $mensaje = "Hola Mundo";
         $numSemanas = 52;
@@ -967,6 +974,7 @@ class ProduccionController extends Controller
             '#FF0000',
             '#A6A6A6',
             '#F9F9EB',
+            '#FFFFFF',
         ];
         $mensaje = "Hola Mundo";
         $numSemanas = 52;

@@ -7,7 +7,7 @@
         <div class="card-header">
           <!--  <h1>CAPTURA SEMANA ACTUAL: {{ $current_week }}</h1>
             <h1> {{ $current_month }} {{$currentYear}}</h1>-->
-            <h3 class="card-title"><b><font size=6+> Registro Semana {{ $current_week }} </br>{{ $current_month.'  ' }}{{$currentYear }}</font></b>
+            <h3 class="card-title"><b><font size=6+> Registro Semana {{ $current_week }} <br>{{ $current_month.'  ' }}{{$currentYear }}</font></b>
                 <small></small>
               </h3>
         </div>
@@ -61,7 +61,7 @@
                                             <th>&nbsp;#</th>
                                             <th>Información de Colores</th>
                                         </tr>
-                                        @for ($i = 1; $i <= 7; $i++)
+                                        @for ($i = 1; $i <= 8; $i++)
                                             <tr>
                                                 <th>{{ $i }}</th>
                                                 <th id="dato{{ $i }}" style="background-color: {{ $colores[$i-1] }}; text-align: left;" >&nbsp;{{ $titulos[$i-1] }}&nbsp;</th>
@@ -100,19 +100,28 @@
                                 <td style="text-align: left">{{ $produccion->nombre }}</td>
                                 <td>{{ $produccion->modulo }}</td>
                                 @for($i = 1; $i <= 7; $i++)
-                                    {{-- Determinar si el checkbox debe estar marcado y con color --}}
-                                    @php
+                                @php
                                     $isChecked = $produccion->{'semana' . $current_week} == $i;
-                                    $colorClass = $isChecked ? 'class-name-for-color-' . $i : ''; // Reemplaza 'class-name-for-color-X' con las clases reales que correspondan
+                                    $colorClass = $isChecked ? 'class-name-for-color-' . $i : '';
                                 @endphp
                                 <td class="centered-content {{ $colorClass }}">
-                                    <input type="checkbox" id="checkbox-{{ $produccion->id }}-{{ $i }}"
+                                    <input type="checkbox" 
+                                        id="checkbox-{{ $produccion->id }}-{{ $i }}"
+                                        data-type="original"
                                         name="semanas[{{ $produccion->id }}][semana{{ $current_week }}]"
                                         value="{{ $i }}"
-                                        onclick="uncheckOthers(this, {{ $i }})"
+                                        onclick="uncheckOthers(this, 'original', {{ $produccion->id }})"
                                         {{ $isChecked ? 'checked' : '' }}>
+                                    @if($i <= 3)
+                                        <input type="checkbox" 
+                                            id="checkbox-extra-{{ $produccion->id }}-{{ $i }}"
+                                            data-type="extra"
+                                            name="semanas[{{ $produccion->id }}][extra{{ $current_week }}]"
+                                            value="{{ $i }}"
+                                            onclick="uncheckOthers(this, 'extra', {{ $produccion->id }})">
+                                    @endif
                                 </td>
-                                @endfor
+                            @endfor
                             </tr>
                         @endforeach
                     </tbody>
@@ -365,37 +374,30 @@
     </style>
 
 <script>
-function uncheckOthers(checkbox) {
-    // Encuentra el elemento tr (fila) más cercano
-    var row = checkbox.closest('tr');
-
-    // Encuentra todas las celdas de la fila y elimina cualquier estilo de resaltado
-    var cells = row.getElementsByTagName('td');
-    for (var i = 2; i < cells.length; i++) { // Comienza desde el índice 2 para omitir las dos primeras celdas
-        cells[i].classList.remove('green', 'light-green', 'yellow', 'orange', 'red', 'peach', 'grey');
-    }
-
-    // Encuentra todos los checkboxes en la misma fila
-    var checkboxes = row.querySelectorAll('input[type="checkbox"]');
-
-    // Deselecciona todos los checkboxes
-    checkboxes.forEach(function(cb) {
-        cb.checked = false;
-        var cell = cb.parentElement;
-        cell.classList.remove('green', 'light-green', 'yellow', 'orange', 'red', 'peach', 'grey');
-    });
+function uncheckOthers(checkbox, checkboxType, rowId) {
+        var row = checkbox.closest('tr');
+        var checkboxes = row.querySelectorAll(`input[type="checkbox"][data-type="${checkboxType}"]`);
+        checkboxes.forEach(function(cb) {
+            if (cb !== checkbox && cb.dataset.type === checkboxType) {
+                cb.checked = false;
+                cb.parentElement.classList.remove('green', 'light-green', 'yellow', 'orange', 'red', 'peach', 'grey');
+            }
+        });
 
     // Selecciona el checkbox y aplica la clase de color correspondiente
-    checkbox.checked = true;
-    var cellIndex = checkbox.parentElement.cellIndex - 2; // Ajusta el índice para las dos primeras celdas
-    var headerCells = document.querySelectorAll('#header-row th');
-    if (cellIndex >= 0 && cellIndex < headerCells.length) {
-        var headerClass = headerCells[cellIndex].classList[0]; // Obtiene la primera clase del encabezado
-        checkbox.parentElement.classList.add(headerClass);
+    // Actualiza el color de la celda actual
+    if (checkbox.checked) {
+            var cellIndex = checkbox.parentElement.cellIndex - 2; // Ajusta según la estructura de tu tabla
+            var headerCells = document.querySelectorAll('#header-row th');
+            var headerClass = headerCells[cellIndex].classList[0];
+            checkbox.parentElement.classList.add(headerClass);
+        } else {
+            checkbox.parentElement.classList.remove('green', 'light-green', 'yellow', 'orange', 'red', 'peach', 'grey');
+        }
     }
-}
 
 </script>
+
 <script>
     function filterTable() {
         var input, filter, table, tr, td, i, txtValue;
