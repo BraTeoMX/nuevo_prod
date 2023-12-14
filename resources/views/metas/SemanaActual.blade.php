@@ -100,28 +100,19 @@
                                 <td style="text-align: left">{{ $produccion->nombre }}</td>
                                 <td>{{ $produccion->modulo }}</td>
                                 @for($i = 1; $i <= 7; $i++)
-                                @php
+                                    {{-- Determinar si el checkbox debe estar marcado y con color --}}
+                                    @php
                                     $isChecked = $produccion->{'semana' . $current_week} == $i;
-                                    $colorClass = $isChecked ? 'class-name-for-color-' . $i : '';
+                                    $colorClass = $isChecked ? 'class-name-for-color-' . $i : ''; // Reemplaza 'class-name-for-color-X' con las clases reales que correspondan
                                 @endphp
                                 <td class="centered-content {{ $colorClass }}">
-                                    <input type="checkbox" 
-                                        id="checkbox-{{ $produccion->id }}-{{ $i }}"
-                                        data-type="original"
+                                    <input type="checkbox" id="checkbox-{{ $produccion->id }}-{{ $i }}"
                                         name="semanas[{{ $produccion->id }}][semana{{ $current_week }}]"
                                         value="{{ $i }}"
-                                        onclick="uncheckOthers(this, 'original', {{ $produccion->id }})"
+                                        onclick="uncheckOthers(this, {{ $i }})"
                                         {{ $isChecked ? 'checked' : '' }}>
-                                    @if($i <= 3)
-                                        <input type="checkbox" 
-                                            id="checkbox-extra-{{ $produccion->id }}-{{ $i }}"
-                                            data-type="extra"
-                                            name="semanas[{{ $produccion->id }}][extra{{ $current_week }}]"
-                                            value="{{ $i }}"
-                                            onclick="uncheckOthers(this, 'extra', {{ $produccion->id }})">
-                                    @endif
                                 </td>
-                            @endfor
+                                @endfor
                             </tr>
                         @endforeach
                     </tbody>
@@ -374,30 +365,37 @@
     </style>
 
 <script>
-function uncheckOthers(checkbox, checkboxType, rowId) {
-        var row = checkbox.closest('tr');
-        var checkboxes = row.querySelectorAll(`input[type="checkbox"][data-type="${checkboxType}"]`);
-        checkboxes.forEach(function(cb) {
-            if (cb !== checkbox && cb.dataset.type === checkboxType) {
-                cb.checked = false;
-                cb.parentElement.classList.remove('green', 'light-green', 'yellow', 'orange', 'red', 'peach', 'grey');
-            }
-        });
+function uncheckOthers(checkbox) {
+    // Encuentra el elemento tr (fila) más cercano
+    var row = checkbox.closest('tr');
 
-    // Selecciona el checkbox y aplica la clase de color correspondiente
-    // Actualiza el color de la celda actual
-    if (checkbox.checked) {
-            var cellIndex = checkbox.parentElement.cellIndex - 2; // Ajusta según la estructura de tu tabla
-            var headerCells = document.querySelectorAll('#header-row th');
-            var headerClass = headerCells[cellIndex].classList[0];
-            checkbox.parentElement.classList.add(headerClass);
-        } else {
-            checkbox.parentElement.classList.remove('green', 'light-green', 'yellow', 'orange', 'red', 'peach', 'grey');
-        }
+    // Encuentra todas las celdas de la fila y elimina cualquier estilo de resaltado
+    var cells = row.getElementsByTagName('td');
+    for (var i = 2; i < cells.length; i++) { // Comienza desde el índice 2 para omitir las dos primeras celdas
+        cells[i].classList.remove('green', 'light-green', 'yellow', 'orange', 'red', 'peach', 'grey');
     }
 
-</script>
+    // Encuentra todos los checkboxes en la misma fila
+    var checkboxes = row.querySelectorAll('input[type="checkbox"]');
 
+    // Deselecciona todos los checkboxes
+    checkboxes.forEach(function(cb) {
+        cb.checked = false;
+        var cell = cb.parentElement;
+        cell.classList.remove('green', 'light-green', 'yellow', 'orange', 'red', 'peach', 'grey');
+    });
+
+    // Selecciona el checkbox y aplica la clase de color correspondiente
+    checkbox.checked = true;
+    var cellIndex = checkbox.parentElement.cellIndex - 2; // Ajusta el índice para las dos primeras celdas
+    var headerCells = document.querySelectorAll('#header-row th');
+    if (cellIndex >= 0 && cellIndex < headerCells.length) {
+        var headerClass = headerCells[cellIndex].classList[0]; // Obtiene la primera clase del encabezado
+        checkbox.parentElement.classList.add(headerClass);
+    }
+}
+
+</script>
 <script>
     function filterTable() {
         var input, filter, table, tr, td, i, txtValue;
