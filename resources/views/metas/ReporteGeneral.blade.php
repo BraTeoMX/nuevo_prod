@@ -112,7 +112,7 @@
                                 </tr>
                             <tr>
                                 <th>&nbsp;#</th>
-                                <th>Total de Modulos</th>
+                                <th>Total de Modulos / % metas cumplidas</th>
                             {{-- Solo mostrar las columnas de semanas dentro del rango seleccionado --}}
                                 @for ($semana = $semanaInicio; $semana <= $semanaFin; $semana++)
                                     @php
@@ -131,7 +131,7 @@
                                         $porcentajeSuma = ($total != 0) ? number_format(($valorSuma / $total) * 100, 2) : 0;
                                         
                                     @endphp
-                                        <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTS[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentajeSuma}}% </strong></td>
+                                        <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTS[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}" style="background: #BFD3C1">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentajeSuma}}% </strong></td>
                                 @endfor
                             </tr>
                             @for ($i = 1; $i <= 7; $i++)
@@ -331,7 +331,7 @@
                                 $porcentajeSumaP2 = ($total != 0) ? number_format(($valorSumaP2 / $total) * 100, 2) : 0;
                                 
                             @endphp
-                                <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTSplanta2[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentajeSumaP2}}% </strong></td>
+                                <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTSplanta2[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}" style="background: #BFD3C1">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentajeSumaP2}}% </strong></td>
                         @endfor
                     </tr>
                             @for ($i = 1; $i <= 7; $i++)
