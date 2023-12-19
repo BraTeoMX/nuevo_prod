@@ -4,12 +4,9 @@
 
 @section('content')
     <div class="card" style="height: auto; width: auto;">
-        <div class="card-header">
-          <!--  <h1>CAPTURA SEMANA ACTUAL: {{ $current_week }}</h1>
-            <h1> {{ $current_month }} {{$currentYear}}</h1>-->
-            <h3 class="card-title"><b><font size=6+> Registro Semana {{ $current_week }} <br>{{ $current_month.'  ' }}{{$currentYear }}</font></b>
-                <small></small>
-              </h3>
+        <div class="card-header encabezado">
+            <h2 class="card-title"> Registro Semana {{ $current_week }} </h2>
+            <h2 class="card-title"> {{ $current_month.'  ' }}{{$currentYear }}</h2>
         </div>
 
         <br>
@@ -18,12 +15,10 @@
 
         <!-- Tarjeta para Planta 1 -->
         <div class="card">
-          <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <div class="card-header" id="headingOne" style="background: #4F3C20;">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: white; font-size: 16px; font-weight: bold;">
                 Planta 1 - Ixtlahuaca
               </button>
-            </h5>
           </div>
 
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
@@ -143,12 +138,10 @@
 
         <!-- Tarjeta para Planta 2 -->
         <div class="card">
-          <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <div class="card-header" id="headingTwo" style="background: #4F3C20">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: white; font-size: 16px; font-weight: bold;">
                 Planta 2 - San Bartolo
               </button>
-            </h5>
           </div>
 
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
@@ -313,6 +306,10 @@
             padding: 16px;
             border-bottom: solid 1px #ddd;
         }
+        .encabezado {
+            display: flex;
+            justify-content: space-between;
+        }
 
         /*Apartado para los diselos del input */
         #searchInput, #searchInput2 {
@@ -388,7 +385,10 @@
         /* Puedes necesitar ajustar la alineación vertical si se desplaza */
         vertical-align: middle;
     }
+    .card-title{
 
+        font-weight: bold;
+    }
     </style>
 
 <script>

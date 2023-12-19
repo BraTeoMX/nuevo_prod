@@ -12,15 +12,12 @@
         </div>
             <!-- Acordeón -->
             <div id="accordion">
-              
               <!-- Tarjeta para Planta 1 -->
               <div class="card">
-                <div class="card-header" id="headingOne">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <div class="card-header" id="headingOne" style="background: #4F3C20">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: white; font-size: 16px; font-weight: bold;">
                       Planta 1 - Ixtlahuaca
                     </button>
-                  </h5>
                 </div>
         
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
@@ -216,14 +213,11 @@
               
               <!-- Tarjeta para Planta 2 -->
               <div class="card">
-                <div class="card-header" id="headingTwo">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <div class="card-header" id="headingTwo" style="background: #4F3C20">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: white; font-size: 16px; font-weight: bold;">
                       Planta 2 San Bartolo
                     </button>
-                  </h5>
                 </div>
-                
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                   <div class="card-body">
                     <!-- Contenido para Planta 2 -->
