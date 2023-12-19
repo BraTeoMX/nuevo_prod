@@ -70,19 +70,30 @@ class ProduccionController extends Controller
     //Esta funcion permite actualizar los datos de la vista llamada SemanaActual y lo hace exclusivamente de la semana actual
     public function actualizarTabla(Request $request)
     {
+        Carbon::setLocale('es');
+        $now = Carbon::now();
+        $current_week = $now->weekOfYear;
          // $request->semanas contendrá todos los datos de los checkboxes
-    foreach ($request->semanas as $idProduccion => $semanas) {
-        foreach ($semanas as $semana => $valor) {
+         foreach ($request->semanas as $idProduccion => $semanas) {
             // Encuentra la producción por ID
             $produccion = Produccion::find($idProduccion);
-            // Aquí asumo que tienes columnas como 'semana1', 'semana2', etc.
-            if ($produccion) {
-                // Actualiza la semana correspondiente
-                $produccion->{$semana} = $valor;
-                $produccion->save();
+    
+            // Actualiza las semanas correspondientes
+            foreach ($semanas as $semana => $valor) {
+                // Aquí asumo que tienes columnas como 'semana1', 'semana2', etc.
+                if ($produccion) {
+                    $produccion->{$semana} = $valor;
+                }
             }
+    
+            // Lógica para el nuevo checkbox "extra"
+            $extraCheckboxName = 'extra' . ($current_week);
+            $produccion->$extraCheckboxName = isset($semanas[$extraCheckboxName]) ? 1 : 0;
+    
+            // Guarda la producción actualizada
+            $produccion->save();
         }
-    }
+    
 
     // Redirecciona de vuelta a la página con un mensaje de éxito o lo que consideres necesario
     return back()->with('success', 'Selecciones actualizadas correctamente.');
