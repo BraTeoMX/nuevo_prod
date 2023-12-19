@@ -50,7 +50,7 @@
     <div id="encabezado">
         <table style="width:100%; align:center">
         <tr class="sin-borde">
-            <td class="sin-borde" width=30% style="text-align:center"><img src="../public/img/logo.png" width="100px" heigth="82px" ></td>
+            <td class="sin-borde" width=30% style="text-align:center"><img src="../public/material/img/logo.png" width="100px" heigth="82px" ></td>
             <td class="sin-borde" width=30%>&nbsp;</td>
             <td class="sin-borde" style="text-align:center; font-size: 10px" >.</td>       
          </tr>

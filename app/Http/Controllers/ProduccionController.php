@@ -127,11 +127,14 @@ class ProduccionController extends Controller
         $now = Carbon::now();
         //$datosProduccion = Produccion::all();
         // Obtener registros donde la columna 'planta' es igual a 'Intimark1'
-        $datosProduccionIntimark1 = Produccion::where('planta', 'Intimark1')->get();
+        $datosProduccionIntimark1 = Produccion::where('planta', 'Intimark1')
+            ->where('estatus', 'A')
+            ->get();
 
         // Obtener registros donde la columna 'planta' es igual a 'Intimark2'
-        $datosProduccionIntimark2 = Produccion::where('planta', 'Intimark2')->get();
-
+        $datosProduccionIntimark2 = Produccion::where('planta', 'Intimark2')
+            ->where('estatus', 'A')
+            ->get();
         //dd($datosProduccionIntimark1, $datosProduccionIntimark2);
 
         // Obtener el número de la semana actual
@@ -409,7 +412,9 @@ class ProduccionController extends Controller
         $now = Carbon::now();
         $datosProduccion = Produccion::all();
         // Obtener registros donde la columna 'planta' es igual a 'Intimark1'
-        $datosProduccionIntimark1 = Produccion::where('planta', 'Intimark1')->get();
+        $datosProduccionIntimark1 = Produccion::where('planta', 'Intimark1')
+            ->where('estatus', 'A')
+            ->get();
         // Obtener el número de la semana actual
         $current_week = $now->weekOfYear;
         // Obtener el nombre del mes actual
@@ -545,7 +550,9 @@ class ProduccionController extends Controller
         $now = Carbon::now();
         $datosProduccion = Produccion::all();
         // Obtener registros donde la columna 'planta' es igual a 'Intimark2'
-        $datosProduccionIntimark2 = Produccion::where('planta', 'Intimark2')->get();
+        $datosProduccionIntimark2 = Produccion::where('planta', 'Intimark2')
+            ->where('estatus', 'A')
+            ->get();
         // Obtener el número de la semana actual
         $current_week = $now->weekOfYear;
         // Obtener el nombre del mes actual
@@ -1099,6 +1106,7 @@ class ProduccionController extends Controller
 
         // Obtener registros donde la columna 'planta' es igual a 'Intimark2'
         $datosProduccionIntimark2 = Produccion::where('planta', 'Intimark2')
+            ->where('estatus', 'A')
             ->get();
 
         
