@@ -55,7 +55,7 @@ class ProduccionController extends Controller
         $numSemanas = 10;
         // Obtener el número de la semana actual
         $current_week = $now->weekOfYear;
-        //$current_week = 52;
+        //$current_week = 50;
         // Obtener el nombre del mes actual
         $current_month = $now->translatedFormat('F');
         $current_month = ucfirst($current_month);
@@ -1106,7 +1106,6 @@ class ProduccionController extends Controller
 
         // Obtener registros donde la columna 'planta' es igual a 'Intimark2'
         $datosProduccionIntimark2 = Produccion::where('planta', 'Intimark2')
-            ->where('estatus', 'A')
             ->get();
 
         
