@@ -97,7 +97,7 @@
                    $porcentajeSuma = ($total != 0) ? number_format(($valorSuma / $total) * 100, 2) : 0;
                    
                @endphp
-                   <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTS[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentajeSuma}}% </strong></td>
+                   <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTS[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}" style="background: #BFD3C1">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentajeSuma}}% </strong></td>
            @endfor
        </tr>
             @for ($i = 1; $i <= 7; $i++)

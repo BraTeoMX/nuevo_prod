@@ -35,13 +35,13 @@
             border: none;
         }
         /* Colores de las cabeceras de colores */
-        .green { background-color: #548235; }
+        .green { background-color: #00B0F0; }
         .light-green { background-color: #00B050; }
         .yellow { background-color: #FFFF00; }
         .SaddleBrown { background-color: #C65911; }
         .red { background-color: #FF0000; }
-        .peach { background-color: #FF9966; }
-        .grey { background-color: #CFC7C5; }
+        .peach { background-color: #A6A6A6; }
+        .grey { background-color: #F9F9EB; }
     
 
 </style>
@@ -91,14 +91,17 @@
                         <td>{{ $produccion->modulo }}</td>    
                         @for ($i = $semanaInicio; $i <= $semanaFin; $i++)
                         @php
-                            $valorSemanal = $produccion->{"semana$i"};
-                            $colorClass = $colorClasses[$valorSemanal] ?? '';
-                        @endphp
-                        <td class="{{ $colorClass }}">
-                            
-                    </td>
-                        @endfor
-                    </tr>
+                                        $valorSemanal = $produccion->{"semana$i"};
+                                        $colorClass = $colorClasses[$valorSemanal] ?? '';
+                                        $extraValue = $produccion->{"extra$i"};
+                                    @endphp
+                                <td class="{{ $colorClass }}">
+                                    @if(in_array($extraValue, [1, 2, 3]))
+                                        <strong>* * * </strong>
+                                    @endif
+                                </td>
+                                    @endfor
+                                </tr>
                 @endforeach
             </tbody>
         </table>
