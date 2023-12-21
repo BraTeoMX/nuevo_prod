@@ -8,6 +8,15 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
+                /* Estilos generales para la tabla */
+                    .propiedadNueva{
+                        background-color: #bbcdce;
+                    }
+                    
+                    .propiedadNuevaN{
+                        background-color: #bbcdce;
+                        font-weight: bold;
+                    }
         body {
             margin: 1cm;
             
@@ -97,7 +106,7 @@
                    $porcentajeSuma = ($total != 0) ? number_format(($valorSuma / $total) * 100, 2) : 0;
                    
                    @endphp
-                       <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTSplanta2[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentajeSuma}}% </strong></td>
+                       <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTSplanta2[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentaje}}% </strong></td>
                    @endfor
                </tr>
             @for ($i = 1; $i <= 7; $i++)
@@ -119,6 +128,38 @@
                     @endfor
                 </tr>
             @endfor
+            <!-- Nueva fila al final de la tabla -->
+            <tr>
+                <td class="propiedadNuevaN">%</td>
+                <td class="propiedadNuevaN">Meta 3 </td>
+                @for ($semana = $semanaInicio; $semana <= $semanaFin; $semana++)
+                    
+                    @foreach ($mesesAMostrar as $mes => $semanas)
+                        @foreach ($semanas as $semanaMostrar)
+                            @if ($semanaMostrar == $semana)
+                                <td class="propiedadNueva"> {{ $TcontadorSuma3Planta2[$semana] }} </td>
+                                <td class="propiedadNuevaN"> {{ $Tporcentajes3Planta2[$semana] }}% </td>
+                            @endif
+                        @endforeach
+                    @endforeach
+                @endfor
+            </tr>
+            <!-- Nueva fila al final de la tabla -->
+            <tr>
+                <td class="propiedadNuevaN">%</td>
+                <td class="propiedadNuevaN">Meta 4</td>
+                @for ($semana = $semanaInicio; $semana <= $semanaFin; $semana++)
+                    
+                    @foreach ($mesesAMostrar as $mes => $semanas)
+                        @foreach ($semanas as $semanaMostrar)
+                            @if ($semanaMostrar == $semana)
+                                <td class="propiedadNueva"> {{ $TcontadorSumaPlanta2[$semana] }} </td>
+                                <td class="propiedadNuevaN"> {{ $TporcentajesPlanta2[$semana] }}% </td>
+                            @endif
+                        @endforeach
+                    @endforeach
+                @endfor
+            </tr>
         </table>
         <br>
         

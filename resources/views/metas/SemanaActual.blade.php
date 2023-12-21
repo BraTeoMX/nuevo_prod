@@ -77,8 +77,8 @@
                         <tr>
                             <th rowspan="2" style="text-align: center; width:400px" >Team Leaders</th>
                             <th rowspan="2" style="text-align: center; width:400px">Modulo</th> 
-                            <th rowspan="2" style="text-align: center;">TE</th> <!-- Nueva columna para el segundo checkbox -->
                             <th colspan="7" style="text-align: center;">SEMANA {{ $current_week }}</th>
+                            <th rowspan="2" style="text-align: center;">TE</th> <!-- Nueva columna para el segundo checkbox -->
                         </tr>
                         <tr id="header-row">
                             <th class="green">&nbsp; &nbsp; &nbsp; &nbsp;</th>
@@ -95,18 +95,6 @@
                             <tr>
                                 <td style="text-align: left">{{ $produccion->nombre }}</td>
                                 <td>{{ $produccion->modulo }}</td>
-                                {{-- Agregar el segundo checkbox --}}
-                                <td class="centered-content">
-                                    @php
-                                        $extraCheckboxName = 'extra' . ($current_week); // Formar el nombre del segundo checkbox
-                                        $isExtraChecked = $produccion->$extraCheckboxName == 1;
-                                    @endphp
-                                    <input type="checkbox" id="extra-checkbox-{{ $produccion->id }}"
-                                        name="semanas[{{ $produccion->id }}][{{ $extraCheckboxName }}]"
-                                        value="1"
-                                        {{ $isExtraChecked ? 'checked' : '' }}>
-                                </td>
-                                {{-- Fin Agregar el segundo checkbox --}}
                                 @for($i = 1; $i <= 7; $i++)
                                     {{-- Determinar si el checkbox debe estar marcado y con color --}}
                                     @php
@@ -117,11 +105,22 @@
                                     <input type="checkbox" id="checkbox-{{ $produccion->id }}-{{ $i }}"
                                         name="semanas[{{ $produccion->id }}][semana{{ $current_week }}]"
                                         value="{{ $i }}"
-                                        onclick="uncheckOthers(this, {{ $i }})"
+                                        onclick="uncheckOthers(this, {{ $i }}, '#extra-checkbox-{{ $produccion->id }}')" 
                                         {{ $isChecked ? 'checked' : '' }}>
                                 </td>
                                 @endfor
-                                
+                                {{-- Agregar el segundo checkbox --}}
+                                <td class="centered-content oculto">
+                                    @php
+                                        $extraCheckboxName = 'extra' . ($current_week); // Formar el nombre del segundo checkbox
+                                        $isExtraChecked = $produccion->$extraCheckboxName == 1;
+                                    @endphp
+                                    <input type="checkbox" id="extra-checkbox-{{ $produccion->id }}"
+                                        name="semanas[{{ $produccion->id }}][{{ $extraCheckboxName }}]"
+                                        value="1"
+                                        {{ $isExtraChecked ? 'checked' : '' }}>
+                                </td>
+                                {{-- Fin Agregar el segundo checkbox --}}
                             </tr>
                         @endforeach
                     </tbody>
@@ -198,8 +197,8 @@
                         <tr>
                             <th rowspan="2"  style="text-align: center; width:400px">Team Leaders</th>
                             <th rowspan="2"  style="text-align: center; width:400px">Modulo</th>
-                            <th rowspan="2" style="text-align: center;">TE</th> <!-- Nueva columna para el segundo checkbox -->
                             <th colspan="7" style="text-align: center;">SEMANA {{ $current_week }}</th>
+                            <th rowspan="2" style="text-align: center;">TE</th> <!-- Nueva columna para el segundo checkbox -->
                         </tr>
                         <tr id="header-row">
                             <th class="green">&nbsp; &nbsp; &nbsp; &nbsp;</th>
@@ -216,18 +215,7 @@
                             <tr>
                                 <td style="text-align: left">{{ $produccion->nombre }}</td>
                                 <td>{{ $produccion->modulo }}</td>
-                                {{-- Agregar el segundo checkbox --}}
-                                <td class="centered-content">
-                                    @php
-                                        $extraCheckboxName = 'extra' . ($current_week); // Formar el nombre del segundo checkbox
-                                        $isExtraChecked = $produccion->$extraCheckboxName == 1;
-                                    @endphp
-                                    <input type="checkbox" id="extra-checkbox-{{ $produccion->id }}"
-                                        name="semanas[{{ $produccion->id }}][{{ $extraCheckboxName }}]"
-                                        value="1"
-                                        {{ $isExtraChecked ? 'checked' : '' }}>
-                                </td>
-                                {{-- Fin Agregar el segundo checkbox --}}
+
                                 @for($i = 1; $i <= 7; $i++)
                                     {{-- Determinar si el checkbox debe estar marcado y con color --}}
                                     @php
@@ -238,10 +226,22 @@
                                     <input type="checkbox" id="checkbox-{{ $produccion->id }}-{{ $i }}"
                                         name="semanas[{{ $produccion->id }}][semana{{ $current_week }}]"
                                         value="{{ $i }}"
-                                        onclick="uncheckOthers(this, {{ $i }})"
+                                        onclick="uncheckOthers(this, {{ $i }}, '#extra-checkbox-{{ $produccion->id }}')" 
                                         {{ $isChecked ? 'checked' : '' }}>
                                 </td>
                                 @endfor
+                                {{-- Agregar el segundo checkbox --}}
+                                <td class="centered-content oculto">
+                                    @php
+                                        $extraCheckboxName = 'extra' . ($current_week); // Formar el nombre del segundo checkbox
+                                        $isExtraChecked = $produccion->$extraCheckboxName == 1;
+                                    @endphp
+                                    <input type="checkbox" id="extra-checkbox-{{ $produccion->id }}"
+                                        name="semanas[{{ $produccion->id }}][{{ $extraCheckboxName }}]"
+                                        value="1"
+                                        {{ $isExtraChecked ? 'checked' : '' }}>
+                                </td>
+                                {{-- Fin Agregar el segundo checkbox --}}
                             </tr>
                         @endforeach
                     </tbody>
@@ -392,7 +392,7 @@
     </style>
 
 <script>
-function uncheckOthers(checkbox) {
+function uncheckOthers(checkbox, weekNumber, secondCheckboxSelector) {
     // Encuentra el elemento tr (fila) más cercano
     var row = checkbox.closest('tr');
 
@@ -414,15 +414,28 @@ function uncheckOthers(checkbox) {
 
     // Selecciona el checkbox y aplica la clase de color correspondiente
     checkbox.checked = true;
-    var cellIndex = checkbox.parentElement.cellIndex - 3; // Ajusta el índice para las tres primeras celdas
+    var cellIndex = checkbox.parentElement.cellIndex - 2; // Ajusta el índice para las tres primeras celdas
     var headerCells = document.querySelectorAll('#header-row th');
     if (cellIndex >= 0 && cellIndex < headerCells.length) {
         var headerClass = headerCells[cellIndex].classList[0]; // Obtiene la primera clase del encabezado
         checkbox.parentElement.classList.add(headerClass);
     }
+    // Mostrar u ocultar el segundo checkbox según la selección del primer checkbox
+    var secondCheckbox = document.querySelector(secondCheckboxSelector);
+    if (weekNumber >= 1 && weekNumber <= 4) {
+        secondCheckbox.parentElement.classList.remove('oculto');
+    } else {
+        secondCheckbox.parentElement.classList.add('oculto');
+    }
 }
 
 </script>
+<style>
+    .oculto {
+        display: none;
+    }
+</style>
+
 
 <script>
     function filterTable() {

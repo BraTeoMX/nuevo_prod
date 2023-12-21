@@ -169,6 +169,7 @@ class ProduccionController extends Controller
         $contadorTS = [];
         $contadoresSemana = [];
         $contadorSuma = [];
+
         for ($semana = 1; $semana <= $numSemanas; $semana++) {
             $contadorTS[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4, 5, 6, 7])
             ->where('planta', 'Intimark1')
@@ -191,6 +192,82 @@ class ProduccionController extends Controller
                 ->count();
             }
         }
+
+        //apartado para los valores de porcentajes se cambiaran los nombres para ver como funciona temporalmente: 
+        $TcontadorTS = [];
+        $TcontadoresSemana = [];
+        $TcontadorSuma = [];
+        $Tporcentajes = [];
+        //Planta 2
+        $TcontadorTSPlanta2 = [];
+        $TcontadoresSemanaPlanta2 = [];
+        $TcontadorSumaPlanta2 = [];
+        $TporcentajesPlanta2 = [];
+
+        for ($semana = 1; $semana <= $numSemanas; $semana++) {
+            // Contador total para cada semana
+            $TcontadorTS[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4, 5, 6, 7])
+                ->where('planta', 'Intimark1')
+                ->count();
+
+            // Contadores para cada día de la semana
+            $TcontadoresSemana[$semana] = [];
+            for ($i = 1; $i <= 7; $i++) {
+                $TcontadoresSemana[$semana][$i] = Produccion::where("semana$semana", $i)
+                    ->where('planta', 'Intimark1')
+                    ->count();
+            }
+
+            // Contador de suma para cada semana
+            $TcontadorSuma[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4])
+                ->where('planta', 'Intimark1')
+                ->count();
+            // Contador de suma para cada semana
+            $TcontadorSuma3[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3])
+                ->where('planta', 'Intimark1')
+                ->count();
+
+            // Cálculo de porcentaje para cada semana
+            $total = $contadorTS[$semana];
+            $porcentaje = ($total != 0) ? number_format(($TcontadorSuma[$semana] / $total) * 100, 2) : 0;
+            $porcentaje3 = ($total != 0) ? number_format(($TcontadorSuma3[$semana] / $total) * 100, 2) : 0;
+            $Tporcentajes[$semana] = $porcentaje;
+            $Tporcentajes3[$semana] = $porcentaje3;
+
+
+            // Apartado para Planta 2: 
+            // + + + + + ++ + 
+            // Contador total para cada semana
+            $TcontadorTSPlanta2[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4, 5, 6, 7])
+                ->where('planta', 'Intimark2')
+                ->count();
+
+            // Contadores para cada día de la semana
+            $TcontadoresSemanaPlanta2[$semana] = [];
+            for ($i = 1; $i <= 7; $i++) {
+                $TcontadoresSemanaPlanta2[$semana][$i] = Produccion::where("semana$semana", $i)
+                    ->where('planta', 'Intimark2')
+                    ->count();
+            }
+
+            // Contador de suma para cada semana
+            $TcontadorSumaPlanta2[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4])
+                ->where('planta', 'Intimark2')
+                ->count();
+            // Contador de suma para cada semana
+            $TcontadorSuma3Planta2[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3])
+                ->where('planta', 'Intimark2')
+                ->count();
+
+            // Cálculo de porcentaje para cada semana
+            $total = $TcontadorTSPlanta2[$semana];
+            $porcentaje = ($total != 0) ? number_format(($TcontadorSumaPlanta2[$semana] / $total) * 100, 2) : 0;
+            $porcentaje3 = ($total != 0) ? number_format(($TcontadorSuma3Planta2[$semana] / $total) * 100, 2) : 0;
+            $TporcentajesPlanta2[$semana] = $porcentaje;
+            $Tporcentajes3Planta2[$semana] = $porcentaje3;
+        }
+
+        
         $contadorTSplanta2 = [];
         $contadoresSemanaPlanta2 = [];
         $contadorSumaP2 = [];
@@ -269,7 +346,20 @@ class ProduccionController extends Controller
                 'titulos', 'colores','colorClasses',
                 'semanaInicio', 'semanaFin','mesesAMostrar',
                 'datosProduccionIntimark1', 'datosProduccionIntimark2',
-                'contadorSuma', 'contadorSumaP2'));
+                'contadorSuma', 'contadorSumaP2',
+                'TcontadorTS',
+                'TcontadoresSemana',
+                'TcontadorSuma', 
+                'TcontadorSuma3', 
+                'Tporcentajes', 
+                'Tporcentajes3', 
+                'TcontadorTSPlanta2',
+                'TcontadoresSemanaPlanta2',
+                'TcontadorSumaPlanta2', 
+                'TcontadorSuma3Planta2', 
+                'TporcentajesPlanta2', 
+                'Tporcentajes3Planta2', 
+                ));
     }
     
 
@@ -747,6 +837,80 @@ class ProduccionController extends Controller
                 ->count();
             }
         }
+        //apartado para los valores de porcentajes se cambiaran los nombres para ver como funciona temporalmente: 
+        $TcontadorTS = [];
+        $TcontadoresSemana = [];
+        $TcontadorSuma = [];
+        $Tporcentajes = [];
+        //Planta 2
+        $TcontadorTSPlanta2 = [];
+        $TcontadoresSemanaPlanta2 = [];
+        $TcontadorSumaPlanta2 = [];
+        $TporcentajesPlanta2 = [];
+
+        for ($semana = 1; $semana <= $numSemanas; $semana++) {
+            // Contador total para cada semana
+            $TcontadorTS[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4, 5, 6, 7])
+                ->where('planta', 'Intimark1')
+                ->count();
+
+            // Contadores para cada día de la semana
+            $TcontadoresSemana[$semana] = [];
+            for ($i = 1; $i <= 7; $i++) {
+                $TcontadoresSemana[$semana][$i] = Produccion::where("semana$semana", $i)
+                    ->where('planta', 'Intimark1')
+                    ->count();
+            }
+
+            // Contador de suma para cada semana
+            $TcontadorSuma[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4])
+                ->where('planta', 'Intimark1')
+                ->count();
+            // Contador de suma para cada semana
+            $TcontadorSuma3[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3])
+                ->where('planta', 'Intimark1')
+                ->count();
+
+            // Cálculo de porcentaje para cada semana
+            $total = $contadorTS[$semana];
+            $porcentaje = ($total != 0) ? number_format(($TcontadorSuma[$semana] / $total) * 100, 2) : 0;
+            $porcentaje3 = ($total != 0) ? number_format(($TcontadorSuma3[$semana] / $total) * 100, 2) : 0;
+            $Tporcentajes[$semana] = $porcentaje;
+            $Tporcentajes3[$semana] = $porcentaje3;
+
+
+            // Apartado para Planta 2: 
+            // + + + + + ++ + 
+            // Contador total para cada semana
+            $TcontadorTSPlanta2[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4, 5, 6, 7])
+                ->where('planta', 'Intimark2')
+                ->count();
+
+            // Contadores para cada día de la semana
+            $TcontadoresSemanaPlanta2[$semana] = [];
+            for ($i = 1; $i <= 7; $i++) {
+                $TcontadoresSemanaPlanta2[$semana][$i] = Produccion::where("semana$semana", $i)
+                    ->where('planta', 'Intimark2')
+                    ->count();
+            }
+
+            // Contador de suma para cada semana
+            $TcontadorSumaPlanta2[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4])
+                ->where('planta', 'Intimark2')
+                ->count();
+            // Contador de suma para cada semana
+            $TcontadorSuma3Planta2[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3])
+                ->where('planta', 'Intimark2')
+                ->count();
+
+            // Cálculo de porcentaje para cada semana
+            $total = $TcontadorTSPlanta2[$semana];
+            $porcentaje = ($total != 0) ? number_format(($TcontadorSumaPlanta2[$semana] / $total) * 100, 2) : 0;
+            $porcentaje3 = ($total != 0) ? number_format(($TcontadorSuma3Planta2[$semana] / $total) * 100, 2) : 0;
+            $TporcentajesPlanta2[$semana] = $porcentaje;
+            $Tporcentajes3Planta2[$semana] = $porcentaje3;
+        }
+
         // $colorClasses es un arreglo que nos da las propiedades de los colores y que manda a llamar de forma dinamica a la tabla de la vista 
         // es importante ya que se optimiza la vista del codigo y posteriomente se manda a llamar dependiendo de la opcion
         $colorClasses = [
@@ -807,7 +971,19 @@ class ProduccionController extends Controller
                     'metas/tablaPDF', compact('mensaje','datosProduccion',
                     'numSemanas','mesesConSemanas', 'current_week', 'current_month',
                     'contadorTS','contadoresSemana','titulos', 'colores','colorClasses',
-                    'semanaInicio', 'semanaFin','mesesAMostrar','contadorSuma'))
+                    'semanaInicio', 'semanaFin','mesesAMostrar','contadorSuma',
+                    'TcontadorTS',
+                    'TcontadoresSemana',
+                    'TcontadorSuma', 
+                    'TcontadorSuma3', 
+                    'Tporcentajes', 
+                    'Tporcentajes3', 
+                    'TcontadorTSPlanta2',
+                    'TcontadoresSemanaPlanta2',
+                    'TcontadorSumaPlanta2', 
+                    'TcontadorSuma3Planta2', 
+                    'TporcentajesPlanta2', 
+                    'Tporcentajes3Planta2', ))
                     ->setPaper('letter', 'landscape',  array('UTF-8','UTF8'));
             $nombre='Tabla-Ixtlahuaca'.'.pdf';
 
@@ -902,6 +1078,53 @@ class ProduccionController extends Controller
                 ->count("semana$semana");
             }
         }
+         //apartado para los valores de porcentajes se cambiaran los nombres para ver como funciona temporalmente: 
+         $TcontadorTS = [];
+         $TcontadoresSemana = [];
+         $TcontadorSuma = [];
+         $Tporcentajes = [];
+         $TcontadorSuma3 = [];
+         $Tporcentajes3 = [];
+         //Planta 2
+         $TcontadorTSPlanta2 = [];
+         $TcontadoresSemanaPlanta2 = [];
+         $TcontadorSumaPlanta2 = [];
+         $TporcentajesPlanta2 = [];
+ 
+         for ($semana = 1; $semana <= $numSemanas; $semana++) {
+ 
+             // Apartado para Planta 2: 
+             // + + + + + ++ + 
+             // Contador total para cada semana
+             $TcontadorTSPlanta2[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4, 5, 6, 7])
+                 ->where('planta', 'Intimark2')
+                 ->count();
+ 
+             // Contadores para cada día de la semana
+             $TcontadoresSemanaPlanta2[$semana] = [];
+             for ($i = 1; $i <= 7; $i++) {
+                 $TcontadoresSemanaPlanta2[$semana][$i] = Produccion::where("semana$semana", $i)
+                     ->where('planta', 'Intimark2')
+                     ->count();
+             }
+ 
+             // Contador de suma para cada semana
+             $TcontadorSumaPlanta2[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3, 4])
+                 ->where('planta', 'Intimark2')
+                 ->count();
+             // Contador de suma para cada semana
+             $TcontadorSuma3Planta2[$semana] = Produccion::whereIn("semana$semana", [1, 2, 3])
+                 ->where('planta', 'Intimark2')
+                 ->count();
+ 
+             // Cálculo de porcentaje para cada semana
+             $total = $TcontadorTSPlanta2[$semana];
+             $porcentaje = ($total != 0) ? number_format(($TcontadorSumaPlanta2[$semana] / $total) * 100, 2) : 0;
+             $porcentaje3 = ($total != 0) ? number_format(($TcontadorSuma3Planta2[$semana] / $total) * 100, 2) : 0;
+             $TporcentajesPlanta2[$semana] = $porcentaje;
+             $Tporcentajes3Planta2[$semana] = $porcentaje3;
+         }
+ 
         // $colorClasses es un arreglo que nos da las propiedades de los colores y que manda a llamar de forma dinamica a la tabla de la vista 
         // es importante ya que se optimiza la vista del codigo y posteriomente se manda a llamar dependiendo de la opcion
         $colorClasses = [
@@ -963,7 +1186,19 @@ class ProduccionController extends Controller
                     'numSemanas','mesesConSemanas', 'current_week', 'current_month',
                     'contadorTSplanta2','contadoresSemanaPlanta2',
                     'titulos', 'colores','colorClasses',
-                    'semanaInicio', 'semanaFin','mesesAMostrar', 'contadorSumaP2'))
+                    'semanaInicio', 'semanaFin','mesesAMostrar', 'contadorSumaP2',
+                    'TcontadorTS',
+                    'TcontadoresSemana',
+                    'TcontadorSuma', 
+                    'TcontadorSuma3', 
+                    'Tporcentajes', 
+                    'Tporcentajes3', 
+                    'TcontadorTSPlanta2',
+                    'TcontadoresSemanaPlanta2',
+                    'TcontadorSumaPlanta2', 
+                    'TcontadorSuma3Planta2', 
+                    'TporcentajesPlanta2', 
+                    'Tporcentajes3Planta2' ))
                     ->setPaper('letter', 'landscape',  array('UTF-8','UTF8'));
             $nombre='Tabla-San-Bartolo'.'.pdf';
 
