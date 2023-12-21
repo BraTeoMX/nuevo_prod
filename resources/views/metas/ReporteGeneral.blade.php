@@ -12,15 +12,12 @@
         </div>
             <!-- Acordeón -->
             <div id="accordion">
-              
               <!-- Tarjeta para Planta 1 -->
               <div class="card">
-                <div class="card-header" id="headingOne">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <div class="card-header" id="headingOne" style="background: #4F3C20">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: white; font-size: 16px; font-weight: bold;">
                       Planta 1 - Ixtlahuaca
                     </button>
-                  </h5>
                 </div>
         
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
@@ -113,7 +110,7 @@
                             <tr>
                                 <th>&nbsp;#</th>
                                 <th>Total de Modulos</th>
-                            {{-- Solo mostrar las columnas de semanas dentro del rango seleccionado --}}
+                                {{-- Solo mostrar las columnas de semanas dentro del rango seleccionado --}}
                                 @for ($semana = $semanaInicio; $semana <= $semanaFin; $semana++)
                                     @php
                                         $valor = $contadorTS[$semana];
@@ -131,7 +128,7 @@
                                         $porcentajeSuma = ($total != 0) ? number_format(($valorSuma / $total) * 100, 2) : 0;
                                         
                                     @endphp
-                                        <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTS[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentajeSuma}}% </strong></td>
+                                        <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTS[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentaje}}% </strong></td>
                                 @endfor
                             </tr>
                             @for ($i = 1; $i <= 7; $i++)
@@ -153,6 +150,39 @@
                                     @endfor
                                 </tr>
                             @endfor
+                            <!-- Nueva fila al final de la tabla -->
+                            <tr>
+                                <td class="propiedadNuevaN">%</td>
+                                <td class="propiedadNuevaN">Meta 3 </td>
+                                @for ($semana = $semanaInicio; $semana <= $semanaFin; $semana++)
+                                    
+                                    @foreach ($mesesAMostrar as $mes => $semanas)
+                                        @foreach ($semanas as $semanaMostrar)
+                                            @if ($semanaMostrar == $semana)
+                                                <td class="propiedadNueva"> {{ $TcontadorSuma3[$semana] }} </td>
+                                                <td class="propiedadNuevaN"> {{ $Tporcentajes3[$semana] }}% </td>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                @endfor
+                            </tr>
+                            <!-- Nueva fila al final de la tabla -->
+                            <tr>
+                                <td class="propiedadNuevaN">%</td>
+                                <td class="propiedadNuevaN">Meta 4</td>
+                                @for ($semana = $semanaInicio; $semana <= $semanaFin; $semana++)
+                                    
+                                    @foreach ($mesesAMostrar as $mes => $semanas)
+                                        @foreach ($semanas as $semanaMostrar)
+                                            @if ($semanaMostrar == $semana)
+                                                <td class="propiedadNueva"> {{ $TcontadorSuma[$semana] }} </td>
+                                                <td class="propiedadNuevaN"> {{ $Tporcentajes[$semana] }}% </td>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                @endfor
+                            </tr>
+
                         </table>
                         <br>
                         <!-- Fin Seccion de la primera tabla -->
@@ -216,14 +246,11 @@
               
               <!-- Tarjeta para Planta 2 -->
               <div class="card">
-                <div class="card-header" id="headingTwo">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <div class="card-header" id="headingTwo" style="background: #4F3C20">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: white; font-size: 16px; font-weight: bold;">
                       Planta 2 San Bartolo
                     </button>
-                  </h5>
                 </div>
-                
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                   <div class="card-body">
                     <!-- Contenido para Planta 2 -->
@@ -331,7 +358,7 @@
                                 $porcentajeSumaP2 = ($total != 0) ? number_format(($valorSumaP2 / $total) * 100, 2) : 0;
                                 
                             @endphp
-                                <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTSplanta2[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentajeSumaP2}}% </strong></td>
+                                <td class="semana semana{{ $semana }}">&nbsp;{{ $contadorTSplanta2[$semana] }}&nbsp;</td><td class="semana semana{{ $semana }}">{{-- {{$porcentaje}}% - --}}<strong> {{$porcentaje}}% </strong></td>
                         @endfor
                     </tr>
                             @for ($i = 1; $i <= 7; $i++)
@@ -353,6 +380,38 @@
                                     @endfor
                                 </tr>
                             @endfor
+                            <!-- Nueva fila al final de la tabla -->
+                            <tr>
+                                <td class="propiedadNuevaN">%</td>
+                                <td class="propiedadNuevaN">Meta 3 </td>
+                                @for ($semana = $semanaInicio; $semana <= $semanaFin; $semana++)
+                                    
+                                    @foreach ($mesesAMostrar as $mes => $semanas)
+                                        @foreach ($semanas as $semanaMostrar)
+                                            @if ($semanaMostrar == $semana)
+                                                <td class="propiedadNueva"> {{ $TcontadorSuma3Planta2[$semana] }} </td>
+                                                <td class="propiedadNuevaN"> {{ $Tporcentajes3Planta2[$semana] }}% </td>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                @endfor
+                            </tr>
+                            <!-- Nueva fila al final de la tabla -->
+                            <tr>
+                                <td class="propiedadNuevaN">%</td>
+                                <td class="propiedadNuevaN">Meta 4</td>
+                                @for ($semana = $semanaInicio; $semana <= $semanaFin; $semana++)
+                                    
+                                    @foreach ($mesesAMostrar as $mes => $semanas)
+                                        @foreach ($semanas as $semanaMostrar)
+                                            @if ($semanaMostrar == $semana)
+                                                <td class="propiedadNueva"> {{ $TcontadorSumaPlanta2[$semana] }} </td>
+                                                <td class="propiedadNuevaN"> {{ $TporcentajesPlanta2[$semana] }}% </td>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                @endfor
+                            </tr>
                         </table>
                         <br>
                         <!-- Fin Seccion de la primera tabla -->
@@ -397,9 +456,12 @@
                                     @php
                                         $valorSemanal = $produccion->{"semana$i"};
                                         $colorClass = $colorClasses[$valorSemanal] ?? '';
+                                        $extraValue = $produccion->{"extra$i"};
                                     @endphp
                                     <td class="{{ $colorClass }}">
-                                        {{-- $valorSemanal --}}
+                                        @if(in_array($extraValue, [1, 2, 3]))
+                                            <strong>* * * </strong>
+                                        @endif
                                 </td>
                                     @endfor
                                 </tr>
@@ -419,6 +481,14 @@
     </div>
     <style>
         /* Estilos generales para la tabla */
+        .propiedadNueva{
+            background-color: #bbcdce;
+        }
+        
+        .propiedadNuevaN{
+            background-color: #bbcdce;
+            font-weight: bold;
+        }
         table {
             border-collapse: collapse;
             width: 100%;
