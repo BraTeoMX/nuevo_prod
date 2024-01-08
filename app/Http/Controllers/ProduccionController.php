@@ -783,6 +783,9 @@ class ProduccionController extends Controller
         Carbon::setLocale('es');
         $now = Carbon::now();
         $datosProduccion = Produccion::all();
+        $datosProduccionIntimark1 = Produccion::where('planta', 'Intimark1')
+            ->where('estatus', 'A')
+            ->get();
         // Obtener el número de la semana actual
         $current_week = $now->weekOfYear;
         // Obtener el nombre del mes actual
@@ -983,7 +986,8 @@ class ProduccionController extends Controller
                     'TcontadorSumaPlanta2', 
                     'TcontadorSuma3Planta2', 
                     'TporcentajesPlanta2', 
-                    'Tporcentajes3Planta2', ))
+                    'Tporcentajes3Planta2', 
+                    'datosProduccionIntimark1', ))
                     ->setPaper('letter', 'landscape',  array('UTF-8','UTF8'));
             $nombre='Tabla-Ixtlahuaca'.'.pdf';
 
@@ -1020,6 +1024,9 @@ class ProduccionController extends Controller
         Carbon::setLocale('es');
         $now = Carbon::now();
         $datosProduccion = Produccion::all();
+        $datosProduccionIntimark2 = Produccion::where('planta', 'Intimark2')
+            ->where('estatus', 'A')
+            ->get();
         // Obtener el número de la semana actual
         $current_week = $now->weekOfYear;
         // Obtener el nombre del mes actual
@@ -1198,7 +1205,8 @@ class ProduccionController extends Controller
                     'TcontadorSumaPlanta2', 
                     'TcontadorSuma3Planta2', 
                     'TporcentajesPlanta2', 
-                    'Tporcentajes3Planta2' ))
+                    'Tporcentajes3Planta2',
+                    'datosProduccionIntimark2', ))
                     ->setPaper('letter', 'landscape',  array('UTF-8','UTF8'));
             $nombre='Tabla-San-Bartolo'.'.pdf';
 
