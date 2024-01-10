@@ -62,16 +62,6 @@
                                 <input type="hidden" name="semana_inicio" id="pdfSemanaInicio2">
                                 <input type="hidden" name="semana_fin" id="pdfSemanaFin2">
                             </form>
-
-                            {{-- <div class = "form-filter-verde">
-                                {{-- Botón para exportar a Excel 
-                                <form id="formExportExcel" action="{{ route('metas.exportExcel') }}" method="POST" >
-                                    @csrf
-                                    <input type="hidden" name="semana_inicio" id="excelSemanaInicio">
-                                    <input type="hidden" name="semana_fin" id="excelSemanaFin">
-                                    <button type="button" id="exportarExcelBtn" class="btn btn-success">Exportar a Excel</button>
-                                </form>
-                            </div> --}}
                         </div>
                     </div>
 
@@ -285,16 +275,6 @@
                                 <input type="hidden" name="semana_inicio" id="pdfSemanaInicio2Planta2">
                                 <input type="hidden" name="semana_fin" id="pdfSemanaFin2Planta2">
                             </form>
-
-                            {{-- <div class = "form-filter-verde">
-                                {{-- Botón para exportar a Excel 
-                                <form id="formExportExcel" action="{{ route('metas.exportExcel') }}" method="POST" >
-                                    @csrf
-                                    <input type="hidden" name="semana_inicio" id="excelSemanaInicio">
-                                    <input type="hidden" name="semana_fin" id="excelSemanaFin">
-                                    <button type="button" id="exportarExcelBtn" class="btn btn-success">Exportar a Excel</button>
-                                </form>
-                            </div> --}}
                         </div>
                     </div>
 
@@ -644,6 +624,11 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Función para validar el rango de semanas
+        function esRangoValido(semanaInicio, semanaFin) {
+            return semanaInicio && semanaFin && parseInt(semanaInicio) <= parseInt(semanaFin);
+        }
+    
         // Asigna los valores a los formularios ocultos de la Planta 1 y envía el formulario
         var generatePdf1 = document.getElementById('generatePdf1');
         if (generatePdf1) {
@@ -651,10 +636,15 @@
                 e.preventDefault();
                 var semanaInicio = document.getElementById('semana_inicio').value;
                 var semanaFin = document.getElementById('semana_fin').value;
-                
+    
+                if (!esRangoValido(semanaInicio, semanaFin)) {
+                    alert("Por favor, seleccione un rango de semanas válido.");
+                    return;
+                }
+    
                 document.getElementById('pdfSemanaInicio').value = semanaInicio;
                 document.getElementById('pdfSemanaFin').value = semanaFin;
-                
+    
                 document.getElementById('formPDF').submit();
             });
         }
@@ -666,53 +656,25 @@
                 e.preventDefault();
                 var semanaInicioPlanta2 = document.getElementById('semana_inicioPlanta2').value;
                 var semanaFinPlanta2 = document.getElementById('semana_finPlanta2').value;
-                
+    
+                if (!esRangoValido(semanaInicioPlanta2, semanaFinPlanta2)) {
+                    alert("Por favor, seleccione un rango de semanas válido.");
+                    return;
+                }
+    
                 document.getElementById('pdfSemanaInicioPlanta2').value = semanaInicioPlanta2;
                 document.getElementById('pdfSemanaFinPlanta2').value = semanaFinPlanta2;
-                
+    
                 document.getElementById('formPDFplanta2').submit();
             });
         }
     
-        // Event listener para exportar a Excel, si es necesario
-        var exportButton = document.getElementById('exportarExcelBtn');
-        if (exportButton) {
-            var semanaInicioSelect = document.getElementById('semana_inicio');
-            var semanaFinSelect = document.getElementById('semana_fin');
-            var excelSemanaInicio = document.getElementById('excelSemanaInicio');
-            var excelSemanaFin = document.getElementById('excelSemanaFin');
-    
-            exportButton.addEventListener('click', function() {
-                excelSemanaInicio.value = semanaInicioSelect.value;
-                excelSemanaFin.value = semanaFinSelect.value;
-    
-                document.getElementById('formExportExcel').submit();
-            });
-        }
+        // ... Código para el botón de exportar a Excel
     });
     </script>
     
     
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    var exportButton = document.getElementById('exportarExcelBtn');
-    var semanaInicioSelect = document.getElementById('semana_inicio');
-    var semanaFinSelect = document.getElementById('semana_fin');
-    var excelSemanaInicio = document.getElementById('excelSemanaInicio');
-    var excelSemanaFin = document.getElementById('excelSemanaFin');
 
-    exportButton.addEventListener('click', function() {
-        // Asignar los valores seleccionados a los campos ocultos
-        excelSemanaInicio.value = semanaInicioSelect.value;
-        excelSemanaFin.value = semanaFinSelect.value;
-
-        // Envía el formulario
-        document.getElementById('formExportExcel').submit();
-    });
-});
-
-
-</script>
 
 
 <script>
