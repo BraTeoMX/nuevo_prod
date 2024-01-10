@@ -46,14 +46,32 @@
                             <button type="submit" style="text-align: center; width:200px">Buscar</button>
                         </form>
                         <div class="form-container form-filter">
-                            {{-- Botón directo para generar el reporte PDF de la Tabla General --}}
-                            <form method="POST" action="{{ route('metas.tablaPDF') }}" id="formPDF">
+                            {{-- Botón desplegable para las opciones de PDF --}}
+                            <!-- Botón para generar reporte PDF de la Planta 1 -->
+                            <button class="btn btn-primary" type="button" id="generatePdf1">Generar Reporte PDF - Tabla General</button>
+
+                            {{-- Formularios ocultos para cada acción de PDF --}}
+                            <form method="POST" action="{{ route('metas.tablaPDF') }}" class="d-none" id="formPDF">
                                 @csrf
                                 <input type="hidden" name="semana_inicio" id="pdfSemanaInicio">
                                 <input type="hidden" name="semana_fin" id="pdfSemanaFin">
-
-                                <button class="btn btn-primary" type="submit" id="generatePdf1">Generar Reporte PDF - Tabla General</button>
                             </form>
+
+                            <form method="POST" action="{{ route('metas.tabla2PDF') }}" class="d-none" id="form2PDF">
+                                @csrf
+                                <input type="hidden" name="semana_inicio" id="pdfSemanaInicio2">
+                                <input type="hidden" name="semana_fin" id="pdfSemanaFin2">
+                            </form>
+
+                            {{-- <div class = "form-filter-verde">
+                                {{-- Botón para exportar a Excel 
+                                <form id="formExportExcel" action="{{ route('metas.exportExcel') }}" method="POST" >
+                                    @csrf
+                                    <input type="hidden" name="semana_inicio" id="excelSemanaInicio">
+                                    <input type="hidden" name="semana_fin" id="excelSemanaFin">
+                                    <button type="button" id="exportarExcelBtn" class="btn btn-success">Exportar a Excel</button>
+                                </form>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -250,18 +268,33 @@
                             </select>
 
 
-                            <button type="submit" style="text-align: center; width:200px">Buscar</button>
+                            <button type="submit">Filtrar Semanas</button>
                         </form>
                         <div class="form-container form-filter">
-                            {{-- Botón directo para generar el reporte PDF de Planta 2 San Bartolo --}}
-                            <form method="POST" action="{{ route('metas.Planta2tablaPDF') }}" id="form2PDFplanta2">
+                            <button class="btn btn-primary" type="button" id="generatePdf1Planta2">Generar Reporte PDF - Tabla General</button>
+                            
+                            {{-- Formularios ocultos para cada acción de PDF --}}
+                            <form method="POST" action="{{ route('metas.Planta2tablaPDF') }}" class="d-none" id="formPDFplanta2">
+                                @csrf
+                                <input type="hidden" name="semana_inicio" id="pdfSemanaInicioPlanta2">
+                                <input type="hidden" name="semana_fin" id="pdfSemanaFinPlanta2">
+                            </form>
+
+                            <form method="POST" action="{{ route('metas.Planta2tabla2PDF') }}" class="d-none" id="form2PDFplanta2">
                                 @csrf
                                 <input type="hidden" name="semana_inicio" id="pdfSemanaInicio2Planta2">
                                 <input type="hidden" name="semana_fin" id="pdfSemanaFin2Planta2">
-
-                                <button class="btn btn-primary" type="submit" id="generatePdf1Planta2">Generar Reporte PDF</button>
                             </form>
-                                                    
+
+                            {{-- <div class = "form-filter-verde">
+                                {{-- Botón para exportar a Excel 
+                                <form id="formExportExcel" action="{{ route('metas.exportExcel') }}" method="POST" >
+                                    @csrf
+                                    <input type="hidden" name="semana_inicio" id="excelSemanaInicio">
+                                    <input type="hidden" name="semana_fin" id="excelSemanaFin">
+                                    <button type="button" id="exportarExcelBtn" class="btn btn-success">Exportar a Excel</button>
+                                </form>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -608,117 +641,58 @@
         }
     }
     </script>
+
 <script>
-    document.getElementById('generatePdf1').addEventListener('click', function(e) {
-        e.preventDefault();
-        var semanaInicio = document.getElementById('semana_inicio').value;
-        var semanaFin = document.getElementById('semana_fin').value;
-
-        if (semanaInicio === '' || semanaFin === '' || parseInt(semanaInicio) > parseInt(semanaFin)) {
-            alert('La selección de rango de semanas no es correcta.');
-            return;
+    document.addEventListener('DOMContentLoaded', function() {
+        // Asigna los valores a los formularios ocultos de la Planta 1 y envía el formulario
+        var generatePdf1 = document.getElementById('generatePdf1');
+        if (generatePdf1) {
+            generatePdf1.addEventListener('click', function(e) {
+                e.preventDefault();
+                var semanaInicio = document.getElementById('semana_inicio').value;
+                var semanaFin = document.getElementById('semana_fin').value;
+                
+                document.getElementById('pdfSemanaInicio').value = semanaInicio;
+                document.getElementById('pdfSemanaFin').value = semanaFin;
+                
+                document.getElementById('formPDF').submit();
+            });
         }
-
-        document.getElementById('formPDF').submit();
-    });
-    document.getElementById('generatePdf1Planta2').addEventListener('click', function(e) {
-        e.preventDefault();
-        var semanaInicio = document.getElementById('semana_inicio').value;
-        var semanaFin = document.getElementById('semana_fin').value;
-
-        if (semanaInicio === '' || semanaFin === '' || parseInt(semanaInicio) > parseInt(semanaFin)) {
-            alert('La selección de rango de semanas no es correcta.');
-            return;
+    
+        // Asigna los valores a los formularios ocultos de la Planta 2 y envía el formulario
+        var generatePdf1Planta2 = document.getElementById('generatePdf1Planta2');
+        if (generatePdf1Planta2) {
+            generatePdf1Planta2.addEventListener('click', function(e) {
+                e.preventDefault();
+                var semanaInicioPlanta2 = document.getElementById('semana_inicioPlanta2').value;
+                var semanaFinPlanta2 = document.getElementById('semana_finPlanta2').value;
+                
+                document.getElementById('pdfSemanaInicioPlanta2').value = semanaInicioPlanta2;
+                document.getElementById('pdfSemanaFinPlanta2').value = semanaFinPlanta2;
+                
+                document.getElementById('formPDFplanta2').submit();
+            });
         }
-
-        document.getElementById('formPDF').submit();
-    });
-
-
-    document.querySelector('.form-filter button[type="submit"]').addEventListener('click', function(e) {
-    var semanaInicio = document.getElementById('semana_inicio').value;
-    var semanaFin = document.getElementById('semana_fin').value;
-
-    if (semanaInicio === '' || semanaFin === '' || parseInt(semanaInicio) > parseInt(semanaFin)) {
-        alert('La selección de rango de semanas no es correcta.');
-        e.preventDefault();
-    }
-});
-
-document.querySelectorAll('.form-filter').forEach(function(form) {
-    form.querySelector('button[type="submit"]').addEventListener('click', function(e) {
-        var semanaInicio = form.querySelector('[name="semana_inicio"]').value;
-        var semanaFin = form.querySelector('[name="semana_fin"]').value;
-
-        if (semanaInicio === '' || semanaFin === '' || parseInt(semanaInicio) > parseInt(semanaFin)) {
-            alert('La selección de rango de semanas no es correcta.');
-            e.preventDefault();
-        }
-    });
-});
-
-
-
-</script>
-<script>
-    // Escuchar cambios en los selectores de semana y actualizar los campos ocultos
-    document.getElementById('semana_inicio').addEventListener('change', function() {
-        var semanaInicio = this.value;
-        document.getElementById('pdfSemanaInicio').value = semanaInicio;
-        document.getElementById('pdfSemanaInicio2').value = semanaInicio;
-    });
-
-    document.getElementById('semana_fin').addEventListener('change', function() {
-        var semanaFin = this.value;
-        document.getElementById('pdfSemanaFin').value = semanaFin;
-        document.getElementById('pdfSemanaFin2').value = semanaFin;
-    });
-
-    // Envía el primer formulario
-    document.getElementById('generatePdf1').addEventListener('click', function(e) {
-        var semanaInicio = document.getElementById('semana_inicio').value;
-        var semanaFin = document.getElementById('semana_fin').value;
-
-        if (semanaInicio === '' || semanaFin === '' || parseInt(semanaInicio) > parseInt(semanaFin)) {
-            e.preventDefault(); // Evita que el formulario se envíe si la validación falla
-        } else {
-            document.getElementById('formPDF').submit();
+    
+        // Event listener para exportar a Excel, si es necesario
+        var exportButton = document.getElementById('exportarExcelBtn');
+        if (exportButton) {
+            var semanaInicioSelect = document.getElementById('semana_inicio');
+            var semanaFinSelect = document.getElementById('semana_fin');
+            var excelSemanaInicio = document.getElementById('excelSemanaInicio');
+            var excelSemanaFin = document.getElementById('excelSemanaFin');
+    
+            exportButton.addEventListener('click', function() {
+                excelSemanaInicio.value = semanaInicioSelect.value;
+                excelSemanaFin.value = semanaFinSelect.value;
+    
+                document.getElementById('formExportExcel').submit();
+            });
         }
     });
-
-// Asegúrate de aplicar una lógica similar a otros botones de generación de PDF si es necesario.
-
-
-    // Envía el segundo formulario
-    document.getElementById('generatePdf2').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.getElementById('form2PDF').submit();
-    });
-</script>
-{{-- Script para planta 2  --}}
-<script>
-    // Escuchar cambios en los selectores de semana y actualizar los campos ocultos para Planta 2
-    document.getElementById('semana_inicioPlanta2').addEventListener('change', function() {
-        document.getElementById('pdfSemanaInicio2Planta2').value = this.value;
-    });
-
-    document.getElementById('semana_finPlanta2').addEventListener('change', function() {
-        document.getElementById('pdfSemanaFin2Planta2').value = this.value;
-    });
-
-    // Envía el formulario para generar el PDF de la Planta 2
-    document.getElementById('generatePdf1Planta2').addEventListener('click', function(e) {
-        var semanaInicio = document.getElementById('semana_inicio').value;
-        var semanaFin = document.getElementById('semana_fin').value;
-
-        if (semanaInicio === '' || semanaFin === '' || parseInt(semanaInicio) > parseInt(semanaFin)) {
-            e.preventDefault(); // Evita que el formulario se envíe si la validación falla
-        } else {
-            document.getElementById('form2PDFplanta2').submit();
-        }
-    });
-</script>
-
+    </script>
+    
+    
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     var exportButton = document.getElementById('exportarExcelBtn');
